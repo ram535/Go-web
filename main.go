@@ -6,7 +6,7 @@ import (
 )
 
 // This function is call anytime, anyone comes to the webserver(website)
-// w http.ResponseWriter, this is where we write the response to our user
+// w http.ResponseWriter, this is where we write the response of the user
 // r *http.Request has information about the request the user is making
 func handlerFunc(w http.ResponseWriter, r *http.Request) {
 	// the first argument, we tell where we want to print to
