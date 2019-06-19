@@ -6,9 +6,15 @@ import (
 )
 
 func handlerFunc(w http.ResponseWriter, r *http.Request) {
-	// set the header Content-Type to text/html
 	w.Header().Set("Content-Type", "text/html")
-	fmt.Fprint(w, "<h1>Welcome to my awesome site</h1>")
+	if r.URL.Path == "/" {
+		fmt.Fprint(w, "<h1>Welcome to my awesome site</h1>")
+	} else if r.URL.Path == "/contact" {
+		fmt.Fprint(w, "To get in touch, please send a email to <a href=\"mailto:support@foo.com\">suppurt@foo.com</a>")
+	} else {
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprint(w, "<h1>Could not find page</h1>")
+	}
 }
 
 func main() {
