@@ -16,22 +16,12 @@ var contactView *views.View
 
 func home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	// homeView.Layout was define as "bootstrap" down there in main(). So this
-	// method look for the "bootstrap template". I define it in bootstrap.gohtml
-	// with {{define bootstrap}}
-	err := homeView.Template.ExecuteTemplate(w, homeView.Layout, nil)
-	if err != nil {
-		panic(err)
-	}
-
+	must(homeView.Render(w, nil))
 }
 
 func contact(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	err := contactView.Template.ExecuteTemplate(w, contactView.Layout, nil)
-	if err != nil {
-		panic(err)
-	}
+	must(contactView.Render(w, nil))
 }
 
 func notFound(w http.ResponseWriter, r *http.Request) {
@@ -54,4 +44,11 @@ func main() {
 	r.HandleFunc("/", home)
 	r.HandleFunc("/contact", contact)
 	http.ListenAndServe(":3000", r)
+}
+
+// This function is just for development mode. We will handle different later this error in production mode.
+func must(err error) {
+	if err != nil {
+		panic(err)
+	}
 }

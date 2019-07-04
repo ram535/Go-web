@@ -1,6 +1,7 @@
 package views
 
 import (
+	"net/http"
 	"path/filepath"
 	"text/template"
 )
@@ -26,6 +27,11 @@ func NewView(layout string, files ...string) *View {
 type View struct {
 	Template *template.Template
 	Layout   string
+}
+
+// Render is used to render the predefined layout.
+func (v *View) Render(w http.ResponseWriter, data interface{}) error {
+	return v.Template.ExecuteTemplate(w, v.Layout, data)
 }
 
 // Since we are not exporting this function,
